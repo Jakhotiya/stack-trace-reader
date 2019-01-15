@@ -1,0 +1,10 @@
+const conf = {
+    mysql: {
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'stack-traces'
+    }
+}
+
+module.exports = conf;
