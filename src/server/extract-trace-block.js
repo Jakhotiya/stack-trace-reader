@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+const os = require('os');
+const trimChar = require('../lib/trim-char');
 
-const log = fs.createReadStream(path.join(__dirname,'__data/trace-blocks.log'));
-let newLinechar = Buffer.from('\n\n');
-let leftOver = Buffer.from('');
+
+const boundary = os.EOL+os.EOL+os.EOL;
+let leftOver = '';
 
 /**
  * Modifies the passed buffer
@@ -13,31 +13,31 @@ let leftOver = Buffer.from('');
  */
 function getBlocksFrom(buff){
     let blocks = [];
-    let data = Buffer.concat([leftOver,buff]);
-    let index = data.indexOf(newLinechar);
-    while(-1!==data.indexOf(newLinechar)){
+    let data = leftOver+buff;
+    while(-1!==data.indexOf(boundary)){
+        let index = data.indexOf(boundary);
         let block = data.slice(0,index);
         blocks.push(block);
-        data = data.slice(index+1);
+        data = data.slice(index+boundary.length);
     }
     leftOver = data;
     return blocks;
 }
 
+//Remember node modules are shared. So even the left over variable is shared
+//This implementation is flawed because if a certain trace block is very huge, the application will start hogging
+//memory since everything is stored in leftover until the boundary is reached
+//@TODO how can you safegurad against memory crash??
 
-
-log.on('data',data=>{
-
-    let blocks = getBlocksFrom(data);
-    Buffer.concat([leftOver,data]);
-    console.log(blocks)
-})
-
-log.on('error',err=>{
-    console.log(err);
-})
-
-log.on('close',()=>{
-
-    console.log('stream closed')
-})
+module.exports = {
+    getBlocks:function(data,cb){
+        let blocks = getBlocksFrom(data);
+        blocks = blocks.map(block=>{
+           return trimChar(block,'\n');
+        });
+        blocks.forEach(cb);
+    },
+    getLeftOver:function(){
+        return trimChar(leftOver,'\n');
+    }
+}
