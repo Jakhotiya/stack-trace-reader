@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack"
+    "build": "webpack",
+    "acceptance":"./node_modules/.bin/codeceptjs run --steps"
   },
   "jest": {
     "testPathIgnorePatterns": [
@@ -24,6 +25,7 @@
     "express": "^4.16.4",
     "mysql": "^2.16.0",
     "npm": "^6.5.0",
+    "prismjs": "^1.15.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },
