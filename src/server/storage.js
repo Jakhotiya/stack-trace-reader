@@ -13,9 +13,9 @@ const storage = {
         result.trace_id = null;
         connection.query('INSERT INTO `trace` SET ?',result , function (err, rows, fields) {
             if (err){
+                console.log(trace);
                 console.log(err);
-            }else{
-                console.log('Affected rows:',rows);
+                process.exit(0);
             }
         });
         connection.end()
@@ -29,6 +29,11 @@ const storage = {
     flushStorage:function(cb){
         let connection = mysql.createConnection(appConfig.mysql);
         connection.query('TRUNCATE `trace`',cb);
+    },
+
+    createSchema:function(schema,cb){
+        let connection = mysql.createConnection(appConfig.mysql);
+        connection.query(schema,cb);
     }
 };
 

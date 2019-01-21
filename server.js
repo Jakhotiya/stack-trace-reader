@@ -35,21 +35,28 @@ app.delete('/flush-storage',function(req,res){
 
 })
 
-app.get('/install',()=>{
-    /**
-     * Install the trace table in the target database. Example query:
-     *
-     CREATE TABLE `trace` (
-     `trace_id` int(11) NOT NULL AUTO_INCREMENT,
-     `trace` longtext NOT NULL,
-     `query` text NOT NULL,
-     `query_time` float NOT NULL,
-     `request` varchar(1000) NOT NULL,
-     UNIQUE KEY `trace_id` (`trace_id`) USING BTREE,
-     KEY `request` (`request`)
-     ) ENGINE=InnoDB AUTO_INCREMENT=983 DEFAULT CHARSET=utf8
-     */
+app.get('/install',(req,res)=>{
 
+    const installSql = `
+        CREATE TABLE  \`trace\` (
+ \`trace_id\` int(11) NOT NULL AUTO_INCREMENT,
+ \`trace\` longtext NOT NULL,
+ \`query\` longtext NOT NULL,
+ \`query_time\` float NOT NULL,
+ \`request\` varchar(1000) NOT NULL,
+ UNIQUE KEY \`trace_id\` (\`trace_id\`) USING BTREE,
+ KEY \`request\` (\`request\`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    `;
+
+
+    storage.createSchema(installSql, function (error, results, fields) {
+        if (error){
+            res.json({'ERROR':'E_INSTALLATION_ERROR:'+error.message});
+            return;
+        }
+        res.json({'ERROR':false})
+    });
 
 })
 
