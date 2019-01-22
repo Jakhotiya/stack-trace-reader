@@ -1,0 +1,78 @@
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+#loader {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 0;
+    z-index: 100;
+    font-size: 72px;
+    height: 100%;
+    width: 100%;
+    color: black;
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.search-container{
+    margin:10px;
+}
+
+.search-container #search {
+    width:400px;
+    height:25px;
+    padding: 7px;
+}
+
+.trace-list{
+    width: 600px;
+    margin:10px;
+}
+
+.trace{
+    margin:10px;
+}
+.formatted-trace{
+    margin-top:10px;
+}
+.trace-line:hover{
+    background-color: #eee;
+}
+
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
+}
+
+.query{
+    position:relative;
+    width: 100%;
+    padding: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.query:hover{
+    background-color: #eee;
+}
+
+.className {
+    color:darkblue;
+}
+.method{
+    color:green;
+}
