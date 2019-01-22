@@ -1,17 +1,20 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './src/client/index.js',
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'public/js')
+        path: path.resolve(__dirname, 'public')
     },
 
     mode:"development",
 
     devServer: {
-        hot: true,
-        contentBase: path.join(__dirname, 'public'),
+        contentBase:"public",
+        hotOnly: true,
         compress: false,
         port: 8082,
         proxy: {
@@ -21,10 +24,18 @@ module.exports = {
 
     module: {
         rules: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
         ]
     },
-
+    plugins: [
+        new CleanWebpackPlugin(['public']),
+        new HtmlWebpackPlugin({template:path.join('src/client/index.html')}),
+        new webpack.HotModuleReplacementPlugin(),
+    ],
     devtool: "source-map"
 
 };

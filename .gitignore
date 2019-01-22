@@ -2,6 +2,6 @@
 node_modules
 npm-debug.log
 .idea
-public/js/*
+public/
 app.config.js
 test/acceptance/_output
