@@ -20,9 +20,11 @@ const className = /(\\{0,1}(\w+\\)*\w+)/g;
  * have made this horrible regex more readable. But for now this works.
  * Need to make it more inclusive. This pattern may flag a trace line invalid even if there
  * some extra spaces
+ * @TODO tokinisation can be implemented using string look ahead functions. That can be more reliable and readable compared to
+ * this regular expression
  * @type {RegExp}
  */
-const traceLinePattern = /^#([0-9]+)\s(\\{0,1}(\w+\\)*\w+)(\[(\\{0,1}(\w+\\)*\w+)\]){0,1}(->|::)(.+)\s+called at\s+\[(.+):(\d+)\]/
+const traceLinePattern = /^#([0-9]+)\s((\\{0,1}(\w+\\)*\w+)(\[(\\{0,1}(\w+\\)*\w+)\]){0,1}(->|::))?(.+)\s+called at\s+\[(.+):(\d+)\]/
 
 /**
  * This is a list of text tokens which help a human make sense
@@ -45,12 +47,16 @@ module.exports = {
 
     tokenize:function(str){
 
-        let r = str.replace(traceLinePattern,'$1 || $2 || $5 || $7 || $8 || $9 || $10');
+        let r = str.replace(traceLinePattern,'$1 || $3 || $6 || $8 || $9 || $10 || $11');
         let arr = r.split(' || ');
 
         let methodCall = arr[4];
         let methodName = methodCall.slice(0,methodCall.indexOf('('));
         let methodArgs = methodCall.slice(methodCall.indexOf('(')+1,methodCall.lastIndexOf(')'));
+
+        /**
+         * @TODO extract arguments from the arguments string
+         */
 
         let result = {
             'position':arr[0],
@@ -58,7 +64,7 @@ module.exports = {
             'parentClass':arr[2],
             'callType':arr[3],
             'methodName':methodName,
-            'arguments':methodArgs.split(', '),
+            'arguments':methodArgs,
             'filepath':arr[5],
             'line':arr[6]
         };
