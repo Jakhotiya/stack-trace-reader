@@ -11,15 +11,15 @@ let mysqlMiddleware = function(req,res,next){
 app.use(express.static('public'))
 
 app.get('/get-trace',(req,res)=>{
-
-    storage.getTrace(req.query,(err, rows, fields)=>{
+    //@FoodForThought: Anychange in result will need refactoring TraceList component. They need a common interface
+    storage.getTrace(req.query,(err, result)=>{
         if(err){
             console.log(err);
-            res.sendStatus(500);
+            res.status(500);
             res.send(err.message);
             return;
         }
-        res.json(rows);
+        res.json(result);
     });
 
 });
