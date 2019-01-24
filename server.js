@@ -11,7 +11,8 @@ let mysqlMiddleware = function(req,res,next){
 app.use(express.static('public'))
 
 app.get('/get-trace',(req,res)=>{
-    storage.getTrace((err, rows, fields)=>{
+
+    storage.getTrace(req.query,(err, rows, fields)=>{
         if(err){
             console.log(err);
             res.sendStatus(500);
