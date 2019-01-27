@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  stack-trace:
+    build: .
+    ports:
+      - "8081:8081"
+    depends_on:
+      - percona
+    links:
+      - percona
+  percona:
+    image: percona
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: stack-traces
