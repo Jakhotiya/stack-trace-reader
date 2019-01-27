@@ -2,6 +2,7 @@ const express = require('express')
 const app = express();
 const parser = require('body-parser');
 const storage = require('./src/server/storage');
+const appConfig = require('./app.config');
 
 let mysqlMiddleware = function(req,res,next){
     storage.saveTrace(req.body);
@@ -61,6 +62,6 @@ app.get('/install',(req,res)=>{
 
 })
 
-app.listen(8081,()=>{
-    console.log('Express running on 8081');
+app.listen(appConfig.port,()=>{
+    console.log('Express running on '+appConfig.port);
 });
