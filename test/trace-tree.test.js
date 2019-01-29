@@ -1,4 +1,4 @@
-const TraceTree = require('./../src/lib/trace-tree');
+const TraceTree = require('@@lib/trace-tree');
 
 describe('Given two stack traces, find the common common call stack',()=>{
 

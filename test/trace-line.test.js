@@ -1,4 +1,4 @@
-const traceLine = require('./../src/lib/trace-line');
+const traceLine = require('@@lib/trace-line');
 
 test('removeHash Can recognize object hashes from the php trace and remove them from php trace', () => {
     let input = "#1 Magento\\Framework\\DB\\Logger\\File[Magento\\Framework\\DB\\Logger\\LoggerAbstract]#0000000020d1c03f000000006cef7a94#->getStats('query', 'INSERT INTO `cat...', array(), &Magento\\Framework\\DB\\Statement\\Pdo\\Mysql#0000000020d1c6ca000000006cef7a94#) called at [vendor/magento/framework/DB/Logger/File.php:67]";

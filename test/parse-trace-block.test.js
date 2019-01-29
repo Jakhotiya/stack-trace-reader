@@ -1,4 +1,4 @@
-const parse = require('../src/lib/parse-trace-block');
+const parse = require('@@lib/parse-trace-block');
 
 /**
  * These tests don't cover line carriage charecter tests thoroughly. The implementation is not robust.

@@ -1,4 +1,4 @@
-const trimChar = require('../src/lib/trim-char');
+const trimChar = require('@@lib/trim-char');
 
 test('trimChar trims given char or sequence of chars from both ends of given string only once ',()=>{
     let input = 'bab';

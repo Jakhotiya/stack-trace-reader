@@ -1,4 +1,4 @@
-const sut = require('../src/server/extract-trace-block');
+const sut = require('@@server/extract-trace-block');
 
 /**
  * DO NOT CHANGE FORMATTING OF ANY INPUT OR OUTPUT STRINGS. THEY ARE INTENTIONALLY FORMATTED THIS WAY
